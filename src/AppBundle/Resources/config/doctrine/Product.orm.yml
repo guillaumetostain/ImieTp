@@ -1,0 +1,28 @@
+AppBundle\Entity\Product:
+    type: entity
+    repositoryClass: AppBundle\Repository\ProductRepository
+    table: product
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 45
+            fixed: false
+        description:
+            type: text
+            nullable: true
+            length: 65535
+            fixed: false
+        price:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+    oneToMany:
+        orderDetail:
+            targetEntity: OrderDetail
+            mappedBy: category

@@ -1,0 +1,32 @@
+AppBundle\Entity\Order:
+    type: entity
+    repositoryClass: AppBundle\Repository\OrderRepository
+    table: order
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        ref:
+            type: string
+            nullable: false
+            length: 45
+            fixed: false
+        datecreated:
+            type: date
+            nullable: false
+            column: dateCreated
+    manyToOne:
+        customer:
+            targetEntity: Customer
+            inversedBy: order
+            joinColumn:
+              name: customerId
+              referencedColumnName: id
+    oneToMany:
+        delivery:
+            targetEntity: Delivery
+            mappedBy: category
+        orderDetail:
+            targetEntity: OrderDetail
+            mappedBy: category
