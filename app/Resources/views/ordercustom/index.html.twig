@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>OrderCustom list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Ref</th>
+                <th>Datecreated</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for orderCustom in orderCustoms %}
+            <tr>
+                <td><a href="{{ path('ordercustom_show', { 'id': orderCustom.id }) }}">{{ orderCustom.id }}</a></td>
+                <td>{{ orderCustom.ref }}</td>
+                <td>{% if orderCustom.datecreated %}{{ orderCustom.datecreated|date('Y-m-d') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('ordercustom_show', { 'id': orderCustom.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('ordercustom_edit', { 'id': orderCustom.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('ordercustom_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}
