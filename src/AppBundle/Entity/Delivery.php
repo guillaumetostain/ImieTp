@@ -30,9 +30,18 @@ class Delivery
     private $invoice;
 
     /**
-     * @var \AppBundle\Entity\Order
+     * @var \AppBundle\Entity\OrderCustom
      */
     private $order;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->datedelivery = new \DateTime();
+    }
 
 
     /**
@@ -117,10 +126,10 @@ class Delivery
     /**
      * Set order
      *
-     * @param \AppBundle\Entity\Order $order
+     * @param \AppBundle\Entity\OrderCustom $order
      * @return Delivery
      */
-    public function setOrder(\AppBundle\Entity\Order $order = null)
+    public function setOrder(\AppBundle\Entity\OrderCustom $order = null)
     {
         $this->order = $order;
 
@@ -130,7 +139,7 @@ class Delivery
     /**
      * Get order
      *
-     * @return \AppBundle\Entity\Order 
+     * @return \AppBundle\Entity\OrderCustom 
      */
     public function getOrder()
     {

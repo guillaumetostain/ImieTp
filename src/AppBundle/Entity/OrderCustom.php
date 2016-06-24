@@ -5,9 +5,9 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Order
+ * OrderCustom
  */
-class Order
+class OrderCustom
 {
     /**
      * @var integer
@@ -46,6 +46,7 @@ class Order
     {
         $this->delivery = new \Doctrine\Common\Collections\ArrayCollection();
         $this->orderDetail = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->datecreated = new \DateTime();
     }
 
     /**
@@ -62,7 +63,7 @@ class Order
      * Set ref
      *
      * @param string $ref
-     * @return Order
+     * @return OrderCustom
      */
     public function setRef($ref)
     {
@@ -85,7 +86,7 @@ class Order
      * Set datecreated
      *
      * @param \DateTime $datecreated
-     * @return Order
+     * @return OrderCustom
      */
     public function setDatecreated($datecreated)
     {
@@ -108,7 +109,7 @@ class Order
      * Add delivery
      *
      * @param \AppBundle\Entity\Delivery $delivery
-     * @return Order
+     * @return OrderCustom
      */
     public function addDelivery(\AppBundle\Entity\Delivery $delivery)
     {
@@ -141,7 +142,7 @@ class Order
      * Add orderDetail
      *
      * @param \AppBundle\Entity\OrderDetail $orderDetail
-     * @return Order
+     * @return OrderCustom
      */
     public function addOrderDetail(\AppBundle\Entity\OrderDetail $orderDetail)
     {
@@ -174,7 +175,7 @@ class Order
      * Set customer
      *
      * @param \AppBundle\Entity\Customer $customer
-     * @return Order
+     * @return OrderCustom
      */
     public function setCustomer(\AppBundle\Entity\Customer $customer = null)
     {

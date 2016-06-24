@@ -45,5 +45,5 @@ AppBundle\Entity\Customer:
             fixed: false
     oneToMany:
         order:
-          targetEntity: Order
+          targetEntity: OrderCustom
           mappedBy: category

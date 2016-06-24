@@ -14,7 +14,7 @@ AppBundle\Entity\OrderDetail:
             scale: 0
     manyToOne:
         order:
-            targetEntity: Order
+            targetEntity: OrderCustom
             inversedBy: orderDetail
             joinColumn:
               name: orderId

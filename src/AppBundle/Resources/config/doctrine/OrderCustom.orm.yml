@@ -1,7 +1,7 @@
-AppBundle\Entity\Order:
+AppBundle\Entity\OrderCustom:
     type: entity
-    repositoryClass: AppBundle\Repository\OrderRepository
-    table: order
+    repositoryClass: AppBundle\Repository\OrderCustomRepository
+    table: orderCustom
     id:
         id:
             type: integer
@@ -19,7 +19,7 @@ AppBundle\Entity\Order:
     manyToOne:
         customer:
             targetEntity: Customer
-            inversedBy: order
+            inversedBy: orderCustom
             joinColumn:
               name: customerId
               referencedColumnName: id

@@ -236,10 +236,10 @@ class Customer
     /**
      * Add order
      *
-     * @param \AppBundle\Entity\Order $order
+     * @param \AppBundle\Entity\OrderCustom $order
      * @return Customer
      */
-    public function addOrder(\AppBundle\Entity\Order $order)
+    public function addOrder(\AppBundle\Entity\OrderCustom $order)
     {
         $this->order[] = $order;
 
@@ -249,9 +249,9 @@ class Customer
     /**
      * Remove order
      *
-     * @param \AppBundle\Entity\Order $order
+     * @param \AppBundle\Entity\OrderCustom $order
      */
-    public function removeOrder(\AppBundle\Entity\Order $order)
+    public function removeOrder(\AppBundle\Entity\OrderCustom $order)
     {
         $this->order->removeElement($order);
     }

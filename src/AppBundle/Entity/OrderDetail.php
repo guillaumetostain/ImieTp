@@ -20,7 +20,7 @@ class OrderDetail
     private $qte;
 
     /**
-     * @var \AppBundle\Entity\Order
+     * @var \AppBundle\Entity\OrderCustom
      */
     private $order;
 
@@ -66,10 +66,10 @@ class OrderDetail
     /**
      * Set order
      *
-     * @param \AppBundle\Entity\Order $order
+     * @param \AppBundle\Entity\OrderCustom $order
      * @return OrderDetail
      */
-    public function setOrder(\AppBundle\Entity\Order $order = null)
+    public function setOrder(\AppBundle\Entity\OrderCustom $order = null)
     {
         $this->order = $order;
 
@@ -79,7 +79,7 @@ class OrderDetail
     /**
      * Get order
      *
-     * @return \AppBundle\Entity\Order 
+     * @return \AppBundle\Entity\OrderCustom 
      */
     public function getOrder()
     {

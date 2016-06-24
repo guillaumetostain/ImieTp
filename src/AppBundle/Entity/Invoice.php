@@ -35,6 +35,7 @@ class Invoice
     public function __construct()
     {
         $this->delivery = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->dateinvoice = new \DateTime();
     }
 
     /**

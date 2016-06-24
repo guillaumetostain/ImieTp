@@ -24,7 +24,7 @@ AppBundle\Entity\Delivery:
               name: invoiceId
               referencedColumnName: id
         order:
-            targetEntity: Order
+            targetEntity: OrderCustom
             inversedBy: delivery
             joinColumn:
               name: orderId
