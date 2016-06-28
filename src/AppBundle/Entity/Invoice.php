@@ -2,46 +2,65 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use DateTime;
 
 /**
  * Invoice
+ * @ORM\Entity
+ * @ORM\Table(name="invoice")
+ * @ExclusionPolicy("all")
  */
 class Invoice
 {
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="ref", type="string", length=45)
+     * @Expose
      */
     private $ref;
 
     /**
-     * @var \DateTime
+     * @var DateTime
+     *
+     * @ORM\Column(name="dateinvoice", type="date")
+     * @Expose
      */
     private $dateinvoice;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var mixed
+     *
+     * @ORM\OneToMany(targetEntity="Delivery", mappedBy="orderCustom")
      */
-    private $delivery;
+    private $deliveries;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->delivery = new \Doctrine\Common\Collections\ArrayCollection();
         $this->dateinvoice = new \DateTime();
+        $this->deliveries = new ArrayCollection();
+
     }
 
     /**
-     * Get id
-     *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -49,22 +68,15 @@ class Invoice
     }
 
     /**
-     * Set ref
-     *
-     * @param string $ref
-     * @return Invoice
+     * @param int $id
      */
-    public function setRef($ref)
+    public function setId($id)
     {
-        $this->ref = $ref;
-
-        return $this;
+        $this->id = $id;
     }
 
     /**
-     * Get ref
-     *
-     * @return string 
+     * @return string
      */
     public function getRef()
     {
@@ -72,22 +84,15 @@ class Invoice
     }
 
     /**
-     * Set dateinvoice
-     *
-     * @param \DateTime $dateinvoice
-     * @return Invoice
+     * @param string $ref
      */
-    public function setDateinvoice($dateinvoice)
+    public function setRef($ref)
     {
-        $this->dateinvoice = $dateinvoice;
-
-        return $this;
+        $this->ref = $ref;
     }
 
     /**
-     * Get dateinvoice
-     *
-     * @return \DateTime 
+     * @return DateTime
      */
     public function getDateinvoice()
     {
@@ -95,35 +100,28 @@ class Invoice
     }
 
     /**
-     * Add delivery
-     *
-     * @param \AppBundle\Entity\Delivery $delivery
-     * @return Invoice
+     * @param DateTime $dateinvoice
      */
-    public function addDelivery(\AppBundle\Entity\Delivery $delivery)
+    public function setDateinvoice($dateinvoice)
     {
-        $this->delivery[] = $delivery;
-
-        return $this;
+        $this->dateinvoice = $dateinvoice;
     }
 
     /**
-     * Remove delivery
-     *
-     * @param \AppBundle\Entity\Delivery $delivery
+     * @return mixed
      */
-    public function removeDelivery(\AppBundle\Entity\Delivery $delivery)
+    public function getDeliveries()
     {
-        $this->delivery->removeElement($delivery);
+        return $this->deliveries;
     }
 
     /**
-     * Get delivery
-     *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @param mixed $deliveries
      */
-    public function getDelivery()
+    public function setDeliveries($deliveries)
     {
-        return $this->delivery;
+        $this->deliveries = $deliveries;
     }
+
+    
 }

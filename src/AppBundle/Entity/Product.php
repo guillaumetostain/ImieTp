@@ -2,50 +2,61 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 /**
  * Product
+ * @ORM\Entity
+ * @ORM\Table(name="product")
+ * @ExclusionPolicy("all")
  */
 class Product
 {
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=45)
+     * @Expose
      */
     private $name;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=100)
+     * @Expose
      */
     private $description;
 
     /**
      * @var float
+     *
+     * @ORM\Column(name="price", type="float")
+     * @Expose
      */
     private $price;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $orderDetail;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->orderDetail = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Get id
+     * @var mixed
      *
-     * @return integer 
+     * @ORM\OneToMany(targetEntity="OrderDetail", mappedBy="product")
+     */
+    private $orderDetails;
+
+    /**
+     * @return int
      */
     public function getId()
     {
@@ -53,22 +64,15 @@ class Product
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     * @return Product
+     * @param int $id
      */
-    public function setName($name)
+    public function setId($id)
     {
-        $this->name = $name;
-
-        return $this;
+        $this->id = $id;
     }
 
     /**
-     * Get name
-     *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -76,22 +80,15 @@ class Product
     }
 
     /**
-     * Set description
-     *
-     * @param string $description
-     * @return Product
+     * @param string $name
      */
-    public function setDescription($description)
+    public function setName($name)
     {
-        $this->description = $description;
-
-        return $this;
+        $this->name = $name;
     }
 
     /**
-     * Get description
-     *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -99,22 +96,15 @@ class Product
     }
 
     /**
-     * Set price
-     *
-     * @param float $price
-     * @return Product
+     * @param string $description
      */
-    public function setPrice($price)
+    public function setDescription($description)
     {
-        $this->price = $price;
-
-        return $this;
+        $this->description = $description;
     }
 
     /**
-     * Get price
-     *
-     * @return float 
+     * @return float
      */
     public function getPrice()
     {
@@ -122,35 +112,32 @@ class Product
     }
 
     /**
-     * Add orderDetail
-     *
-     * @param \AppBundle\Entity\OrderDetail $orderDetail
-     * @return Product
+     * @param float $price
      */
-    public function addOrderDetail(\AppBundle\Entity\OrderDetail $orderDetail)
+    public function setPrice($price)
     {
-        $this->orderDetail[] = $orderDetail;
-
-        return $this;
+        $this->price = $price;
     }
 
     /**
-     * Remove orderDetail
-     *
-     * @param \AppBundle\Entity\OrderDetail $orderDetail
+     * @return mixed
      */
-    public function removeOrderDetail(\AppBundle\Entity\OrderDetail $orderDetail)
+    public function getOrderDetails()
     {
-        $this->orderDetail->removeElement($orderDetail);
+        return $this->orderDetails;
     }
 
     /**
-     * Get orderDetail
-     *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @param mixed $orderDetails
      */
-    public function getOrderDetail()
+    public function setOrderDetails($orderDetails)
     {
-        return $this->orderDetail;
+        $this->orderDetails = $orderDetails;
     }
+
+    public function __construct()
+    {
+        $this->orderDetails = new ArrayCollection();
+    }
+
 }

@@ -2,31 +2,37 @@
 /**
  * Created by PhpStorm.
  * User: gtostain
- * Date: 23/06/2016
- * Time: 18:14
+ * Date: 28/06/2016
+ * Time: 20:36
  */
 
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\Entity\Delivery;
+use AppBundle\Utils\RandomString;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use AppBundle\Entity\Delivery;
 
 class LoadDeliveryData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $em)
     {
-        for($i = 0; $i <= 10; $i++)
-        {
+        $delivery1 = new Delivery();
+        $delivery1->setRef(RandomString::generateRandomString());
+        $delivery1->setDatedelivery(new \DateTime());
+        $delivery1->setInvoice($this->getReference('invoice1'));
+        $delivery1->setOrder($this->getReference('order1'));
 
-            $delivery = new Delivery();
-            $delivery->setRef('ref'.$i);
-            $delivery->setDatedelivery(new \DateTime());
-            $delivery->setInvoice($this->getReference('invoice'.$i));
-            $delivery->setOrder($this->getReference('order'.$i));
-            $em->persist($delivery);
-        }
+        $em->persist($delivery1);
+
+        $delivery2 = new Delivery();
+        $delivery2->setRef(RandomString::generateRandomString());
+        $delivery2->setDatedelivery(new \DateTime());
+        $delivery2->setInvoice($this->getReference('invoice2'));
+        $delivery2->setOrder($this->getReference('order2'));
+
+        $em->persist($delivery2);
 
         $em->flush();
 
@@ -39,6 +45,6 @@ class LoadDeliveryData extends AbstractFixture implements OrderedFixtureInterfac
      */
     public function getOrder()
     {
-        return 4; // the order in which fixtures will be loaded
+        return 6; // the order in which fixtures will be loaded
     }
 }

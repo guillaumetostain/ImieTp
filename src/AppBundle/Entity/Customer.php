@@ -2,70 +2,95 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\ExclusionPolicy;
 
 /**
  * Customer
+ *
+ * @ORM\Entity
+ * @ORM\Table(name="customer")
+ * @ExclusionPolicy("all")
  */
 class Customer
 {
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     private $id;
-
+    
     /**
      * @var string
+     *
+     * @ORM\Column(name="ref", type="string", length=45)
+     * @Expose
      */
     private $ref;
-
+    
     /**
      * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=45)
+     * @Expose
      */
     private $name;
-
+    
     /**
      * @var string
+     *
+     * @ORM\Column(name="address", type="string", length=45)
+     * @Expose
      */
     private $address;
-
+    
     /**
      * @var string
+     *
+     * @ORM\Column(name="postalcode", type="string", length=45)
+     * @Expose
      */
     private $postalcode;
-
+    
     /**
      * @var string
+     *
+     * @ORM\Column(name="city", type="string", length=45)
+     * @Expose
      */
     private $city;
-
+    
     /**
      * @var string
+     *
+     * @ORM\Column(name="telephone", type="string", length=45, nullable=true)
+     * @Expose
      */
     private $telephone;
-
+    
     /**
      * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=45)
+     * @Expose
      */
     private $email;
-
+    
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $order;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->order = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Get id
+     * @var mixed
      *
-     * @return integer 
+     * @ORM\OneToMany(targetEntity="OrderCustom", mappedBy="customer")
+     */
+    private $orders;
+
+    /**
+     * @return int
      */
     public function getId()
     {
@@ -73,22 +98,15 @@ class Customer
     }
 
     /**
-     * Set ref
-     *
-     * @param string $ref
-     * @return Customer
+     * @param int $id
      */
-    public function setRef($ref)
+    public function setId($id)
     {
-        $this->ref = $ref;
-
-        return $this;
+        $this->id = $id;
     }
 
     /**
-     * Get ref
-     *
-     * @return string 
+     * @return string
      */
     public function getRef()
     {
@@ -96,22 +114,15 @@ class Customer
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     * @return Customer
+     * @param string $ref
      */
-    public function setName($name)
+    public function setRef($ref)
     {
-        $this->name = $name;
-
-        return $this;
+        $this->ref = $ref;
     }
 
     /**
-     * Get name
-     *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -119,22 +130,15 @@ class Customer
     }
 
     /**
-     * Set address
-     *
-     * @param string $address
-     * @return Customer
+     * @param string $name
      */
-    public function setAddress($address)
+    public function setName($name)
     {
-        $this->address = $address;
-
-        return $this;
+        $this->name = $name;
     }
 
     /**
-     * Get address
-     *
-     * @return string 
+     * @return string
      */
     public function getAddress()
     {
@@ -142,22 +146,15 @@ class Customer
     }
 
     /**
-     * Set postalcode
-     *
-     * @param string $postalcode
-     * @return Customer
+     * @param string $address
      */
-    public function setPostalcode($postalcode)
+    public function setAddress($address)
     {
-        $this->postalcode = $postalcode;
-
-        return $this;
+        $this->address = $address;
     }
 
     /**
-     * Get postalcode
-     *
-     * @return string 
+     * @return string
      */
     public function getPostalcode()
     {
@@ -165,22 +162,15 @@ class Customer
     }
 
     /**
-     * Set city
-     *
-     * @param string $city
-     * @return Customer
+     * @param string $postalcode
      */
-    public function setCity($city)
+    public function setPostalcode($postalcode)
     {
-        $this->city = $city;
-
-        return $this;
+        $this->postalcode = $postalcode;
     }
 
     /**
-     * Get city
-     *
-     * @return string 
+     * @return string
      */
     public function getCity()
     {
@@ -188,22 +178,15 @@ class Customer
     }
 
     /**
-     * Set telephone
-     *
-     * @param string $telephone
-     * @return Customer
+     * @param string $city
      */
-    public function setTelephone($telephone)
+    public function setCity($city)
     {
-        $this->telephone = $telephone;
-
-        return $this;
+        $this->city = $city;
     }
 
     /**
-     * Get telephone
-     *
-     * @return string 
+     * @return string
      */
     public function getTelephone()
     {
@@ -211,22 +194,15 @@ class Customer
     }
 
     /**
-     * Set email
-     *
-     * @param string $email
-     * @return Customer
+     * @param string $telephone
      */
-    public function setEmail($email)
+    public function setTelephone($telephone)
     {
-        $this->email = $email;
-
-        return $this;
+        $this->telephone = $telephone;
     }
 
     /**
-     * Get email
-     *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -234,35 +210,35 @@ class Customer
     }
 
     /**
-     * Add order
-     *
-     * @param \AppBundle\Entity\OrderCustom $order
-     * @return Customer
+     * @param string $email
      */
-    public function addOrder(\AppBundle\Entity\OrderCustom $order)
+    public function setEmail($email)
     {
-        $this->order[] = $order;
-
-        return $this;
+        $this->email = $email;
     }
 
     /**
-     * Remove order
-     *
-     * @param \AppBundle\Entity\OrderCustom $order
+     * @return mixed
      */
-    public function removeOrder(\AppBundle\Entity\OrderCustom $order)
+    public function getOrders()
     {
-        $this->order->removeElement($order);
+        return $this->orders;
     }
 
     /**
-     * Get order
-     *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @param mixed $orders
      */
-    public function getOrder()
+    public function setOrders($orders)
     {
-        return $this->order;
+        $this->orders = $orders;
+    }
+
+    public function __toString() {
+        return $this->name;
+    }
+
+    public function __construct()
+    {
+        $this->orders = new ArrayCollection();
     }
 }

@@ -2,40 +2,68 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use DateTime;
 
 /**
  * OrderCustom
+ * @ORM\Entity
+ * @ORM\Table(name="orderCustom")
+ * @ExclusionPolicy("all")
  */
 class OrderCustom
 {
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="ref", type="string", length=45)
+     * @Expose
      */
     private $ref;
 
     /**
-     * @var \DateTime
+     * @var DateTime
+     *
+     * @ORM\Column(name="datecreated", type="date")
+     * @Expose
      */
     private $datecreated;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var mixed
+     *
+     * @ORM\OneToMany(targetEntity="OrderDetail", mappedBy="orderCustom")
+     *
      */
-    private $delivery;
+    private $orderDetails;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var mixed
+     *
+     * @ORM\OneToMany(targetEntity="Delivery", mappedBy="orderCustom")
+     * @Expose
      */
-    private $orderDetail;
+    private $deliveries;
 
     /**
-     * @var \AppBundle\Entity\Customer
+     * @var Customer
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Customer", inversedBy="orders")
+     * @ORM\JoinColumn(name="customerId", referencedColumnName="id")
+     * @Expose
      */
     private $customer;
 
@@ -44,15 +72,13 @@ class OrderCustom
      */
     public function __construct()
     {
-        $this->delivery = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->orderDetail = new \Doctrine\Common\Collections\ArrayCollection();
         $this->datecreated = new \DateTime();
+        $this->orderDetails = new ArrayCollection();
+        $this->deliveries = new ArrayCollection();
     }
 
     /**
-     * Get id
-     *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -60,22 +86,15 @@ class OrderCustom
     }
 
     /**
-     * Set ref
-     *
-     * @param string $ref
-     * @return OrderCustom
+     * @param int $id
      */
-    public function setRef($ref)
+    public function setId($id)
     {
-        $this->ref = $ref;
-
-        return $this;
+        $this->id = $id;
     }
 
     /**
-     * Get ref
-     *
-     * @return string 
+     * @return string
      */
     public function getRef()
     {
@@ -83,22 +102,15 @@ class OrderCustom
     }
 
     /**
-     * Set datecreated
-     *
-     * @param \DateTime $datecreated
-     * @return OrderCustom
+     * @param string $ref
      */
-    public function setDatecreated($datecreated)
+    public function setRef($ref)
     {
-        $this->datecreated = $datecreated;
-
-        return $this;
+        $this->ref = $ref;
     }
 
     /**
-     * Get datecreated
-     *
-     * @return \DateTime 
+     * @return DateTime
      */
     public function getDatecreated()
     {
@@ -106,91 +118,60 @@ class OrderCustom
     }
 
     /**
-     * Add delivery
-     *
-     * @param \AppBundle\Entity\Delivery $delivery
-     * @return OrderCustom
+     * @param DateTime $datecreated
      */
-    public function addDelivery(\AppBundle\Entity\Delivery $delivery)
+    public function setDatecreated($datecreated)
     {
-        $this->delivery[] = $delivery;
-
-        return $this;
+        $this->datecreated = $datecreated;
     }
 
     /**
-     * Remove delivery
-     *
-     * @param \AppBundle\Entity\Delivery $delivery
+     * @return mixed
      */
-    public function removeDelivery(\AppBundle\Entity\Delivery $delivery)
+    public function getOrderDetails()
     {
-        $this->delivery->removeElement($delivery);
+        return $this->orderDetails;
     }
 
     /**
-     * Get delivery
-     *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @param mixed $orderDetails
      */
-    public function getDelivery()
+    public function setOrderDetails($orderDetails)
     {
-        return $this->delivery;
+        $this->orderDetails = $orderDetails;
     }
 
     /**
-     * Add orderDetail
-     *
-     * @param \AppBundle\Entity\OrderDetail $orderDetail
-     * @return OrderCustom
+     * @return mixed
      */
-    public function addOrderDetail(\AppBundle\Entity\OrderDetail $orderDetail)
+    public function getDeliveries()
     {
-        $this->orderDetail[] = $orderDetail;
-
-        return $this;
+        return $this->deliveries;
     }
 
     /**
-     * Remove orderDetail
-     *
-     * @param \AppBundle\Entity\OrderDetail $orderDetail
+     * @param mixed $deliveries
      */
-    public function removeOrderDetail(\AppBundle\Entity\OrderDetail $orderDetail)
+    public function setDeliveries($deliveries)
     {
-        $this->orderDetail->removeElement($orderDetail);
+        $this->deliveries = $deliveries;
     }
 
     /**
-     * Get orderDetail
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getOrderDetail()
-    {
-        return $this->orderDetail;
-    }
-
-    /**
-     * Set customer
-     *
-     * @param \AppBundle\Entity\Customer $customer
-     * @return OrderCustom
-     */
-    public function setCustomer(\AppBundle\Entity\Customer $customer = null)
-    {
-        $this->customer = $customer;
-
-        return $this;
-    }
-
-    /**
-     * Get customer
-     *
-     * @return \AppBundle\Entity\Customer 
+     * @return Customer
      */
     public function getCustomer()
     {
         return $this->customer;
     }
+
+    /**
+     * @param Customer $customer
+     */
+    public function setCustomer($customer)
+    {
+        $this->customer = $customer;
+    }
+
+
 }

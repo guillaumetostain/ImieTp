@@ -2,35 +2,39 @@
 /**
  * Created by PhpStorm.
  * User: gtostain
- * Date: 23/06/2016
- * Time: 18:33
+ * Date: 28/06/2016
+ * Time: 20:29
  */
 
 namespace AppBundle\DataFixtures\ORM;
 
+
+use AppBundle\Entity\Invoice;
+use AppBundle\Utils\RandomString;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use AppBundle\Entity\Invoice;
 
 class LoadInvoiceData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $em)
     {
-        for($i = 0; $i <= 10; $i++)
-        {
+        $invoice1 = new Invoice();
+        $invoice1->setRef(RandomString::generateRandomString());
+        $invoice1->setDateinvoice(new \DateTime());
+        
+        $em->persist($invoice1);
 
-            $invoice = new Invoice();
-            $invoice->setRef('ref'.$i);
-            $invoice->setDateinvoice(new \DateTime());
+        $invoice2 = new Invoice();
+        $invoice2->setRef(RandomString::generateRandomString());
+        $invoice2->setDateinvoice(new \DateTime());
 
-            $this->addReference('invoice'.$i, $invoice);
-
-            $em->persist($invoice);
-        }
+        $em->persist($invoice2);
 
         $em->flush();
 
+        $this->addReference('invoice1', $invoice1);
+        $this->addReference('invoice2', $invoice2);
     }
 
     /**

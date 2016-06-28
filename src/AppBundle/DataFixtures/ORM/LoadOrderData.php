@@ -8,29 +8,34 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\Entity\OrderCustom;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use AppBundle\Entity\OrderCustom;
+use AppBundle\Utils\RandomString;
 
 class LoadOrderData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $em)
     {
-        for($i = 0; $i <= 10; $i++)
-        {
+        $order1 = new OrderCustom();
+        $order1->setRef(RandomString::generateRandomString());
+        $order1->setDatecreated(new \DateTime());
+        $order1->setCustomer($this->getReference('customer1'));
 
-            $order = new OrderCustom();
-            $order->setRef('ref'.$i);
-            $order->setDatecreated(new \DateTime());
-            $order->setCustomer($this->getReference('customer'.$i));
+        $em->persist($order1);
 
-            $this->addReference('order'.$i, $order);
+        $order2 = new OrderCustom();
+        $order2->setRef(RandomString::generateRandomString());
+        $order2->setDatecreated(new \DateTime());
+        $order2->setCustomer($this->getReference('customer2'));
 
-            $em->persist($order);
-        }
+        $em->persist($order2);
 
         $em->flush();
+
+        $this->addReference('order1', $order1);
+        $this->addReference('order2', $order2);
 
     }
 
@@ -41,6 +46,6 @@ class LoadOrderData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function getOrder()
     {
-        return 2; // the order in which fixtures will be loaded
+        return 4; // the order in which fixtures will be loaded
     }
 }

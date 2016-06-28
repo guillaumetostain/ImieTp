@@ -4,7 +4,7 @@ namespace AppBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class OrderdetailControllerTest extends WebTestCase
+class OrderDetailControllerTest extends WebTestCase
 {
     /*
     public function testCompleteScenario()

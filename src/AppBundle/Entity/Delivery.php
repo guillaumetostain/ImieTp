@@ -3,51 +3,68 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use DateTime;
 
 /**
  * Delivery
+ * @ORM\Entity
+ * @ORM\Table(name="delivery")
+ * @ExclusionPolicy("all")
  */
 class Delivery
 {
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     private $id;
-
+    
     /**
      * @var string
+     *
+     * @ORM\Column(name="ref", type="string", length=45)
+     * @Expose
      */
     private $ref;
-
+    
     /**
-     * @var \DateTime
+     * @var DateTime
+     *
+     * @ORM\Column(name="datedelivery", type="date")
+     * @Expose
      */
     private $datedelivery;
-
+    
     /**
-     * @var \AppBundle\Entity\Invoice
+     * @var Invoice
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Invoice", inversedBy="deliveries")
+     * @ORM\JoinColumn(name="invoiceId", referencedColumnName="id")
+     * @Expose
      */
     private $invoice;
-
+    
     /**
-     * @var \AppBundle\Entity\OrderCustom
+     * @var OrderCustom
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\OrderCustom", inversedBy="deliveries")
+     * @ORM\JoinColumn(name="orderId", referencedColumnName="id")
      */
     private $order;
 
-
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->datedelivery = new \DateTime();
     }
 
-
     /**
-     * Get id
-     *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -55,22 +72,15 @@ class Delivery
     }
 
     /**
-     * Set ref
-     *
-     * @param string $ref
-     * @return Delivery
+     * @param int $id
      */
-    public function setRef($ref)
+    public function setId($id)
     {
-        $this->ref = $ref;
-
-        return $this;
+        $this->id = $id;
     }
 
     /**
-     * Get ref
-     *
-     * @return string 
+     * @return string
      */
     public function getRef()
     {
@@ -78,22 +88,15 @@ class Delivery
     }
 
     /**
-     * Set datedelivery
-     *
-     * @param \DateTime $datedelivery
-     * @return Delivery
+     * @param string $ref
      */
-    public function setDatedelivery($datedelivery)
+    public function setRef($ref)
     {
-        $this->datedelivery = $datedelivery;
-
-        return $this;
+        $this->ref = $ref;
     }
 
     /**
-     * Get datedelivery
-     *
-     * @return \DateTime 
+     * @return DateTime
      */
     public function getDatedelivery()
     {
@@ -101,22 +104,15 @@ class Delivery
     }
 
     /**
-     * Set invoice
-     *
-     * @param \AppBundle\Entity\Invoice $invoice
-     * @return Delivery
+     * @param DateTime $datedelivery
      */
-    public function setInvoice(\AppBundle\Entity\Invoice $invoice = null)
+    public function setDatedelivery($datedelivery)
     {
-        $this->invoice = $invoice;
-
-        return $this;
+        $this->datedelivery = $datedelivery;
     }
 
     /**
-     * Get invoice
-     *
-     * @return \AppBundle\Entity\Invoice 
+     * @return Invoice
      */
     public function getInvoice()
     {
@@ -124,25 +120,28 @@ class Delivery
     }
 
     /**
-     * Set order
-     *
-     * @param \AppBundle\Entity\OrderCustom $order
-     * @return Delivery
+     * @param Invoice $invoice
      */
-    public function setOrder(\AppBundle\Entity\OrderCustom $order = null)
+    public function setInvoice($invoice)
     {
-        $this->order = $order;
-
-        return $this;
+        $this->invoice = $invoice;
     }
 
     /**
-     * Get order
-     *
-     * @return \AppBundle\Entity\OrderCustom 
+     * @return Order
      */
     public function getOrder()
     {
         return $this->order;
     }
+
+    /**
+     * @param Order $order
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+    }
+    
+    
 }
